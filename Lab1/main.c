@@ -83,7 +83,17 @@ int runOpCode(unsigned int value) {
     }
 }
 
-void createMatrix(int n) {
+void printMatrix(int *array, int n) {
+    int i, j;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%3d\t\t", *(array + i * n + j));
+        }
+        printf("\n");
+    }
+}
+
+int *createMatrix(int n) {
     int *array;
     array = (int *) malloc(n * n * sizeof(int));
 
@@ -93,13 +103,11 @@ void createMatrix(int n) {
             *(array + i * n + j) = rand() & 0xff;
         }
     }
+    return array;
+}
 
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            printf("%3d\t\t", *(array + i * n + j));
-        }
-        printf("\n");
-    }
+int getMatrixPosition(int *array, int i, int j, int n) {
+    return *(array + i * n + j);
 }
 
 void runBinaryFormat() {
@@ -122,22 +130,46 @@ void runOptionOpCode() {
     scanf("%d", &value);
     int result = runOpCode(value);
     printf("%d\n", result);
+}
 
-
+void runGetValueMatrix(int *array, int size) {
+    int i, j;
+    printf("enter value i: ");
+    scanf("%d", &i);
+    printf("enter value j: ");
+    scanf("%d", &j);
+    int valueAtPos = getMatrixPosition(array, i, j, size);
+    printf("%d\n", valueAtPos);
 }
 
 void runCreateMatrix() {
-    int value;
-    printf("enter value: ");
-    scanf("%d", &value);
-    createMatrix(value);
+    int size;
+    printf("enter size: ");
+    scanf("%d", &size);
+    int *array = createMatrix(size);
+    printMatrix(array, size);
+
+    runGetValueMatrix(array, size);
+
+    int selection = 1;
+    while (selection > 0) {
+        printf("Get value from array?\n1)\tYes \n0)\tNo\n");
+        printf("enter value: ");
+        scanf("%d", &selection);
+
+        if (selection == 1) {
+            runGetValueMatrix(array, size);
+        } else {
+            break;
+        }
+    }
 }
 
 int main() {
-    int flag = 1;
-    unsigned short value;
+    unsigned int runProgram = 1;
+    unsigned int value;
 
-    while (flag == 1) {
+    while (runProgram) {
         printf("Select a program to run: \n"
                "0) exit\n"
                "1) print binary format\n"
@@ -149,23 +181,9 @@ int main() {
         printf("enter option: ");
         scanf("%d", &value);
 
-//        if (value == 0) {
-//            flag = 0;
-//        } else if (value == 1) {
-//            runBinaryFormat();
-//        } else if (value == 2) {
-//            runBinaryFormat();
-//        } else if (value == 3) {
-//            runBinaryFormat();
-//        } else if (value == 4) {
-//            runBinaryFormat();
-//        } else {
-//            printf("Option wasn't recognized\n");
-//        }
-
         switch (value) {
             case 0:
-                flag = 0;
+                runProgram = 0;
                 break;
             case 1:
                 runBinaryFormat();
