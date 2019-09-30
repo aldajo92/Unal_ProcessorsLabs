@@ -45,6 +45,8 @@ int runOpCode(unsigned int value) {
     unsigned int a = (value >> 8) & 0xff;
     short operation = (value >> 16) & 0b1111;
 
+    printf("a: %d, b: %d, operation: %d\n", a, b, operation);
+
     switch (operation) {
         case 0:
             return a + b;
@@ -79,9 +81,6 @@ int runOpCode(unsigned int value) {
         default:
             return 0;
     }
-
-    printf("a: %d, b: %d, operation: ", a, b);
-    printBinaryFormat(operation);
 }
 
 void createMatrix(int n) {
@@ -89,38 +88,92 @@ void createMatrix(int n) {
     array = (int *) malloc(n * n * sizeof(int));
 
     int i, j;
-    for (i = 0; i < n; i++)
-        for (j = 0; j < n; j++)
-            *(array + i * n + j) = rand() & 0xff;
-
     for (i = 0; i < n; i++){
-        for (j = 0; j < n; j++){
+        for (j = 0; j < n; j++) {
+            *(array + i * n + j) = rand() & 0xff;
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
             printf("%3d\t\t", *(array + i * n + j));
         }
         printf("\n");
     }
+}
 
-//    for (int i = 0; i < 10; i++) {
-//        for (int j = 0; j < 10; j++) {
-//            int value = *(*(array + i) + j);
-//            printf("value %d\t", value);
-//        }
-//        printf("\n");
-//    }
+void runBinaryFormat(){
+    int value;
+    printf("enter value: ");
+    scanf("%d", &value);
+    printBinaryFormat(value);
+}
+
+void runHexFormat(){
+    int value;
+    printf("enter value: ");
+    scanf("%d", &value);
+    printHexFormat(value);
+}
+
+void runOptionOpCode() {
+    int value;
+    printf("enter value: ");
+    scanf("%d", &value);
+    int result = runOpCode(value);
+    printf("%d\n", result);
+
+
+}
+
+void runCreateMatrix() {
+    int value;
+    printf("enter value: ");
+    scanf("%d", &value);
+    createMatrix(value);
 }
 
 int main() {
-    printf("size of integer value: %lu bits\n", sizeof(unsigned int) * 8);
-    printf("size of short value: %lu bits\n", sizeof(unsigned short) * 8);
+    printf("Select a program to run: \n"
+           "0) exit\n"
+           "1) print binary format\n"
+           "2) print hex format\n"
+           "3) opCode\n"
+           "4) createMatrix\n"
+           );
 
-//    unsigned int value;
-//    scanf("%d", &value);
-//    printHexFormat(value);
+    unsigned short value;
+    printf("enter option: ");
+    scanf("%d", &value);
 
-//    unsigned int reference = 460046;
-//    runOpCode(reference);
+    short flag = 1;
 
-    createMatrix(10);
+    while (flag){
+        switch (value) {
+            case 0:
+                flag = 0;
+                break;
+            case 1:
+                runBinaryFormat();
+                break;
+            case 2:
+                runHexFormat();
+                break;
+            case 3:
+                runOptionOpCode();
+                break;
+            case 4:
+                runCreateMatrix();
+                break;
+            default:
+                printf("Option wasn't recognized\n");
+                break;
+        }
+    }
+
+
+//    printf("size of integer value: %lu bits\n", sizeof(unsigned int) * 8);
+//    printf("size of short value: %lu bits\n", sizeof(unsigned short) * 8);
 
     return 0;
 }
