@@ -88,7 +88,7 @@ void createMatrix(int n) {
     array = (int *) malloc(n * n * sizeof(int));
 
     int i, j;
-    for (i = 0; i < n; i++){
+    for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
             *(array + i * n + j) = rand() & 0xff;
         }
@@ -102,14 +102,14 @@ void createMatrix(int n) {
     }
 }
 
-void runBinaryFormat(){
+void runBinaryFormat() {
     int value;
     printf("enter value: ");
     scanf("%d", &value);
     printBinaryFormat(value);
 }
 
-void runHexFormat(){
+void runHexFormat() {
     int value;
     printf("enter value: ");
     scanf("%d", &value);
@@ -134,21 +134,35 @@ void runCreateMatrix() {
 }
 
 int main() {
-    printf("Select a program to run: \n"
-           "0) exit\n"
-           "1) print binary format\n"
-           "2) print hex format\n"
-           "3) opCode\n"
-           "4) createMatrix\n"
-           );
-
+    int flag = 1;
     unsigned short value;
-    printf("enter option: ");
-    scanf("%d", &value);
 
-    short flag = 1;
+    while (flag == 1) {
+        printf("Select a program to run: \n"
+               "0) exit\n"
+               "1) print binary format\n"
+               "2) print hex format\n"
+               "3) opCode\n"
+               "4) createMatrix\n"
+        );
 
-    while (flag){
+        printf("enter option: ");
+        scanf("%d", &value);
+
+//        if (value == 0) {
+//            flag = 0;
+//        } else if (value == 1) {
+//            runBinaryFormat();
+//        } else if (value == 2) {
+//            runBinaryFormat();
+//        } else if (value == 3) {
+//            runBinaryFormat();
+//        } else if (value == 4) {
+//            runBinaryFormat();
+//        } else {
+//            printf("Option wasn't recognized\n");
+//        }
+
         switch (value) {
             case 0:
                 flag = 0;
@@ -169,6 +183,9 @@ int main() {
                 printf("Option wasn't recognized\n");
                 break;
         }
+        printf("\n");
+
+
     }
 
 
