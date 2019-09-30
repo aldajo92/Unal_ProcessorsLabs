@@ -85,13 +85,19 @@ int runOpCode(unsigned int value) {
 }
 
 void createMatrix(int n) {
-    int **array;
-    array = (int **) malloc(n * n * sizeof(int));
+    int *array;
+    array = (int *) malloc(n * n * sizeof(int));
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            *(*(array + i) + j) = rand();
+    int i, j;
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++)
+            *(array + i * n + j) = rand() & 0xff;
+
+    for (i = 0; i < n; i++){
+        for (j = 0; j < n; j++){
+            printf("%3d\t\t", *(array + i * n + j));
         }
+        printf("\n");
     }
 
 //    for (int i = 0; i < 10; i++) {
