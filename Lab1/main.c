@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 char getCharValue(unsigned char byte) {
     char result = 0;
@@ -44,7 +45,7 @@ int runOpCode(unsigned int value) {
     unsigned int a = (value >> 8) & 0xff;
     short operation = (value >> 16) & 0b1111;
 
-    switch (operation){
+    switch (operation) {
         case 0:
             return a + b;
         case 1:
@@ -83,16 +84,37 @@ int runOpCode(unsigned int value) {
     printBinaryFormat(operation);
 }
 
+void createMatrix(int n) {
+    int **array;
+    array = (int **) malloc(n * n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            *(*(array + i) + j) = rand();
+        }
+    }
+
+//    for (int i = 0; i < 10; i++) {
+//        for (int j = 0; j < 10; j++) {
+//            int value = *(*(array + i) + j);
+//            printf("value %d\t", value);
+//        }
+//        printf("\n");
+//    }
+}
+
 int main() {
     printf("size of integer value: %lu bits\n", sizeof(unsigned int) * 8);
     printf("size of short value: %lu bits\n", sizeof(unsigned short) * 8);
 
-    unsigned int value;
-    scanf("%d", &value);
-    printHexFormat(value);
+//    unsigned int value;
+//    scanf("%d", &value);
+//    printHexFormat(value);
 
-    unsigned int reference = 460046;
-    runOpCode(reference);
+//    unsigned int reference = 460046;
+//    runOpCode(reference);
+
+    createMatrix(10);
 
     return 0;
 }
